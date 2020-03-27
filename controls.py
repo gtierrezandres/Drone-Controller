@@ -1,4 +1,5 @@
 import pygame
+import time
 
 pygame.init()
 j = pygame.joystick.Joystick(0)
@@ -10,9 +11,15 @@ try:
         for event in events:
 
             #check if the joystick is being moved
-            if event.type == pygame.JOYAXISMOTION and event.value != 0.0:
-                if event.axis == 1 or event.axis == 2:
-                    print(f"left joystick value: {event.value}")
+            if event.type == pygame.JOYAXISMOTION and event.value != 0:
+                if event.axis == j.get_axis(0) or event.axis == j.get_axis(1):
+                    x_axis = j.get_axis(0)
+                    y_axis = j.get_axis(1)
+                    left = x_axis < -0.5
+                    right = x_axis > 0.5
+                    top = y_axis < -0.5
+                    bottom = y_axis > 0.5
+                    print( f"left joystick values: (top: {top}), (bottom: {bottom})" )
                 elif event.axis == 3 or event.axis == 4:
                     print(f"right joystick value: {event.value}")
                 #print(event.dict, event.joy, event.axis, event.value)
@@ -54,7 +61,11 @@ try:
             
             #check if the event type is an arrow press
             elif event.type == pygame.JOYHATMOTION:
-                print(event.dict, event.joy, event.hat, event.value)
+                #print(event.dict, event.joy, event.hat, event.value)
+                #print(event.hat)
+                print(event.value)
+                #print(type(event.value))
+
 
 #exit out of the loop Ctrl C is pressed
 except KeyboardInterrupt:
