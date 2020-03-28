@@ -22,3 +22,8 @@ Handy Python script that will allow you to control your Ryze-Tello Drone with yo
     $ pip3 install -r requirements.txt
 This will make sure that all the dependencies will be installed properly
     
+## drone_driver.py
+##### This python script is used to control the drone.
+ 
+## controller.py
+##### This python script can be used for testing. The driver code might be extended to other bluetooth devices and this script could be of great aid in testing a new device.
