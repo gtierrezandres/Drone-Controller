@@ -1,5 +1,5 @@
 # Drone-Controller
-Handy Python script that will allow you to control your Ryze-Tello Drone with your ps4 Controller
+Handy Python script that will allow you to control your Ryze-Tello Drone with your ps4 Controller. Keep in mind that this repository will only work on linux computers. So far, I have tested it on a raspberry pi 4B+ and Ubuntu 18.04 LTS
 
 ## Installation
 ##### Clone and install requirements:
@@ -14,14 +14,11 @@ Handy Python script that will allow you to control your Ryze-Tello Drone with yo
     $ sudo apt-get install libqtgui4
     $ sudo apt-get install python3-pyqt5
     $ sudo apt-get install libqt4-test
-    
-## Pairing ps4 controller with your computer:
-    $ bluetoothctl
-    [bluetooth]# power on
-    [bluetooth]# agent on
-    [bluetooth]# agent-default
-    [bluetooth]# scan on
-    
-##### Now bluetooth devices will apper. Look for your ps4 controller and enter its code:
-    [bluetooth]# pair XX:XX:XX:XX:XX:XX
+
+## Optional
+##### I would recommend using a virtual environment. You can use venv in the following way (from Drone-Controller directory):
+    $ python3 -m venv venv
+    $ source venv/bin/activate
+    $ pip3 install -r requirements.txt
+This will make sure that all the dependencies will be installed properly
     
