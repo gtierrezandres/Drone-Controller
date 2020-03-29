@@ -180,7 +180,7 @@ class FrontEnd(object):
             self.tello.land()
             self.send_rc_control = False
         elif button == L2:
-            cv2.imwrite(os.path.abspath(photos), self.tello.get_frame_read().frame)
+            cv2.imwrite(os.path.join(os.path.abspath(photos), f"picture{imgCount}.jpg"), self.tello.get_frame_read().frame)
             print("L2")
 
     def update(self):
