@@ -3,29 +3,48 @@ import cv2
 import pygame
 import numpy as np
 import time
+import os
 
 # Speed of the drone
 S = 60
 # Frames per second of the pygame window display
 FPS = 25
 
+# Buttons used
 X = 0
 O = 1
 triangle = 2
 square = 3
 L1 = 4
 R1 = 5
+L2 = 6
+R2 = 7
+share_button = 8
 options_button = 9
 
+imgCount = 0
+
+
+photos = "photos"
+videos = "videos"
+
+# Check if a directory exists for storing pictures and recording video
+if not os.path.exists(f"/Drone-Controller/{photos}") and not os.path.exists(f"/Drone-Controller/{photos}"):
+    os.mkdir(f"/Drone-Controller/{photos}")
+    os.mkdir(f"/Drone-Controller/{videos}")
+
 class FrontEnd(object):
-    """ Maintains the Tello display and moves it through the keyboard keys.
-        Press escape key to quit.
+    """ Maintains the Tello display and moves it through the buttonboard buttons.
+        Press escape button to quit.
         The controls are:
-            - T: Takeoff
-            - L: Land
-            - Arrow keys: Forward, backward, left and right.
-            - A and D: Counter clockwise and clockwise rotations
-            - W and S: Up and down.
+            - Triangle: Takeoff
+            - Square: Land
+            - Arrow buttons: Forward, backward, left and right
+            - L1 and R1: Counter clockwise and clockwise rotations
+            - L2 and R2: Snap and record a video
+            - X and O: Up and down
+            - Options: turns off drone
+            - Share: 
     """
 
     def __init__(self):
@@ -66,7 +85,7 @@ class FrontEnd(object):
             print("Not set speed to lowest possible")
             return
 
-        # In case streaming is on. This happens when we quit this program without the escape key.
+        # In case streaming is on. This happens when we quit this program without the escape button.
         if not self.tello.streamoff():
             print("Could not stop video stream")
             return
@@ -111,6 +130,7 @@ class FrontEnd(object):
             frame = pygame.surfarray.make_surface(frame)
             self.screen.blit(frame, (0, 0))
             pygame.display.update()
+            frameRet = frame_read.frame
 
             time.sleep(1 / FPS)
 
@@ -118,9 +138,9 @@ class FrontEnd(object):
         self.tello.end()
 
     def buttonDown(self, button):
-        """ Update velocities based on key pressed
+        """ Update velocities based on button pressed
         Arguments:
-            key: pygame key
+            button: pygame button
         """
         if button == (0, 1):  # set forward velocity
             self.for_back_velocity = S
@@ -140,10 +160,11 @@ class FrontEnd(object):
             self.yaw_velocity = S
 
     def buttonUp(self, button):
-        """ Update velocities based on key released
+        """ Update velocities based on button released
         Arguments:
-            key: pygame key
+            button: pygame button
         """
+
         if button == (0, 0):
             #print("hello from buttonUp")
             self.for_back_velocity = 0
@@ -158,6 +179,8 @@ class FrontEnd(object):
         elif button == square:  # land
             self.tello.land()
             self.send_rc_control = False
+        elif button == L2:
+            cv2.imwrite(f"/Drone-Controller/{photos}/{imgCount}.jpg", self.tello.get_frame_read().frame)
 
     def update(self):
         """ Update routine. Send velocities to Tello."""
