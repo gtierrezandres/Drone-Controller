@@ -10,7 +10,7 @@ try:
         events = pygame.event.get()
         for event in events:
 
-            #check if the joystick is being moved
+            #check for joystick activity
             if event.type == pygame.JOYAXISMOTION and event.value != 0:
                 if event.axis == j.get_axis(0) or event.axis == j.get_axis(1):
                     x_axis = j.get_axis(0)
@@ -24,7 +24,7 @@ try:
                     print(f"right joystick value: {event.value}")
                 #print(event.dict, event.joy, event.axis, event.value)
 
-            
+            # check for L2 and R2 activity
             elif event.type == pygame.JOYBALLMOTION:
                 print(event.dict, event.joy, event.ball, event.rel)
 
@@ -41,11 +41,11 @@ try:
                 
                 #print △
                 elif event.button == 2:
-                    print("△")
+                    print("Triangle")
 
                 #print □
                 elif event.button == 3:
-                    print("□")
+                    print("Square")
 
                 #print L1
                 elif event.button == 4:
@@ -59,7 +59,7 @@ try:
             #elif event.type == pygame.JOYBUTTONUP:
             #    print(event.dict, event.joy, event.button, 'released')
             
-            #check if the event type is an arrow press
+            #check for arrow activity
             elif event.type == pygame.JOYHATMOTION:
                 #print(event.dict, event.joy, event.hat, event.value)
                 #print(event.hat)
@@ -67,7 +67,7 @@ try:
                 #print(type(event.value))
 
 
-#exit out of the loop Ctrl C is pressed
+#exit out of the when loop Ctrl+C is pressed
 except KeyboardInterrupt:
     print("EXITING NOW")
     j.quit()
