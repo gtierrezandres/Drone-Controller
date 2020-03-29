@@ -181,6 +181,7 @@ class FrontEnd(object):
             self.send_rc_control = False
         elif button == L2:
             cv2.imwrite(os.path.join(os.path.abspath(photos), f"picture{imgCount}.jpg"), self.tello.get_frame_read().frame)
+            imgCount += 1
             print("L2")
 
     def update(self):
