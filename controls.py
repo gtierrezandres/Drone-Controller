@@ -55,6 +55,12 @@ try:
                 elif event.button == 5:
                     print("R1")
 
+                elif event.button == 6:
+                    print("L2")
+
+                elif event.button == 7:
+                    print("R2")
+
                 #print(event.dict, event.joy, event.button, 'pressed')
             #elif event.type == pygame.JOYBUTTONUP:
             #    print(event.dict, event.joy, event.button, 'released')

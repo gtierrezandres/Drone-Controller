@@ -27,11 +27,11 @@ imgCount = 0
 
 photos = "photos"
 videos = "videos"
-
+os.path.exists(os.path.abspath(("Drone-Controller")))
 # Check if a directory exists for storing pictures and recording video
-if not os.path.exists(f"/Drone-Controller/{photos}") and not os.path.exists(f"/Drone-Controller/{photos}"):
-    os.mkdir(f"/Drone-Controller/{photos}")
-    os.mkdir(f"/Drone-Controller/{videos}")
+if not os.path.exists(os.path.abspath(photos)) and not os.path.exists(os.path.abspath(videos)):
+    os.mkdir(os.path.join(os.getcwd(), photos))
+    os.mkdir(os.path.join(os.getcwd(), videos))
 
 class FrontEnd(object):
     """ Maintains the Tello display and moves it through the buttonboard buttons.
@@ -180,7 +180,8 @@ class FrontEnd(object):
             self.tello.land()
             self.send_rc_control = False
         elif button == L2:
-            cv2.imwrite(f"/Drone-Controller/{photos}/{imgCount}.jpg", self.tello.get_frame_read().frame)
+            cv2.imwrite(os.path.abspath(photos), self.tello.get_frame_read().frame)
+            print("L2")
 
     def update(self):
         """ Update routine. Send velocities to Tello."""
