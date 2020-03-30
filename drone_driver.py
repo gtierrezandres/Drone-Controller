@@ -22,16 +22,31 @@ R2 = 7
 share_button = 8
 options_button = 9
 
-imgCount = 0
-
 
 photos = "photos"
 videos = "videos"
+
+imgCount = 0
+
 os.path.exists(os.path.abspath(("Drone-Controller")))
 # Check if a directory exists for storing pictures and recording video
 if not os.path.exists(os.path.abspath(photos)) and not os.path.exists(os.path.abspath(videos)):
     os.mkdir(os.path.join(os.getcwd(), photos))
     os.mkdir(os.path.join(os.getcwd(), videos))
+
+else:
+    img_dir = os.path.abspath(photos)
+    vid_dir = os.path.abspath(videos)
+
+    if len(os.listdir(img_dir)) != 0:
+        for f in os.listdir(img_dir):
+            os.remove(os.path.join(img_dir, f))
+
+    if len(os.listdir(img_dir)) != 0:
+        for file in os.listdir(vid_dir):
+            os.remove(os.path.join(vid_dir, file))
+
+
 
 class FrontEnd(object):
     """ Maintains the Tello display and moves it through the buttonboard buttons.
@@ -44,7 +59,7 @@ class FrontEnd(object):
             - L2 and R2: Snap and record a video
             - X and O: Up and down
             - Options: turns off drone
-            - Share: 
+            - Share:
     """
 
     def __init__(self):
@@ -165,6 +180,8 @@ class FrontEnd(object):
             button: pygame button
         """
 
+        global imgCount
+
         if button == (0, 0):
             #print("hello from buttonUp")
             self.for_back_velocity = 0
@@ -181,8 +198,8 @@ class FrontEnd(object):
             self.send_rc_control = False
         elif button == L2:
             cv2.imwrite(os.path.join(os.path.abspath(photos), f"picture{imgCount}.jpg"), self.tello.get_frame_read().frame)
-            imgCount += 1
-            print("L2")
+            imgCount+=1
+            print("Photo Taken!!!")
 
     def update(self):
         """ Update routine. Send velocities to Tello."""
