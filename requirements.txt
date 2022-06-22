@@ -1,4 +1,4 @@
-numpy==1.18.2
+numpy==1.22.0
 opencv-python==3.4.3.18
 pkg-resources==0.0.0
 pygame==1.9.6
